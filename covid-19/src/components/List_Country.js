@@ -14,7 +14,6 @@ export default class List_Country extends Component {
                             <p className="card-text">Số ca nhiễm: {this.props.confirmed}</p>
                             <p className="card-text">Số ca tử vong: {this.props.deaths}</p>
                             <p className="card-text">Số ca hồi phục: {this.props.recovered}</p>
-                            {/* <a href="#a" className="btn btn-primary">Go somewhere</a> */}
                         </div>
                     </div>
                 </div>
