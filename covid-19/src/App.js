@@ -12,6 +12,8 @@ export default class App extends Component {
          dataConfirmed: '',
          dataDeaths: '',
          dataRecovered: '',
+         dataSelect: {},
+         dataSearch: []
       };
    }
    async componentDidMount() {
@@ -21,6 +23,7 @@ export default class App extends Component {
          dataConfirmed: res.data.latest.confirmed,
          dataDeaths: res.data.latest.deaths,
          dataRecovered: res.data.latest.recovered,
+         dataSearch: res.data.locations
       })
    }
    getDataListCountry = () => {
@@ -46,10 +49,22 @@ export default class App extends Component {
       }
    }
    isChangeToGetId = async (event) => {
-      // const res = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations/'+event.target.value);
-      console.log(event.target.value);
+      const res = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations/'+event.target.value);
+      this.setState({
+         dataSelect: res.data.location
+      })
    }
-
+   isChangeToGetText = async (event) => {
+      let dataSearch = [];
+      this.state.dataSearch.forEach((item)=>{
+         if(item.country.indexOf(event.target.value) !== -1){
+            dataSearch.push(item);
+         }
+      });
+      this.setState({
+         data: dataSearch
+      })
+   }
    render() {
       return (
          <>
@@ -61,13 +76,14 @@ export default class App extends Component {
                <p>Tổng số ca hồi phục: {this.state.dataRecovered}</p>
             </div>
             <div className="container">
-               <select className="form-control" name="id_country" onChange={(event)=>this.isChangeToGetId(event)}>
+               <select className="form-control" name="id_country" onChange={(event) => this.isChangeToGetId(event)}>
                   <option>Chọn quốc gia</option>
                   {this.pushDataToSelect()}
                </select>
-               <Item_Country />
+               <Item_Country dataSelect={this.state.dataSelect} />
             </div>
             <div className="container">
+               <input name="search" placeholder="Nhập từ khóa..." className="form-control" type="text" onChange={(event) => this.isChangeToGetText(event)} />
                <div className="row">
                   {this.getDataListCountry()}
                </div>
