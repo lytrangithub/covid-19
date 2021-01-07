@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
+import NumberFormat from 'react-number-format';
 
 export default class Item_Country extends Component {
    setData = () => {
       if(Object.prototype.hasOwnProperty.call(this.props.dataSelect, 'id')){
-         console.log(this.props.dataSelect);
+         // console.log(this.props.dataSelect);
          return (
             <tr className="success">
                <td>{this.props.dataSelect.id}</td>
                <td>{this.props.dataSelect.country}</td>
                <td>{this.props.dataSelect.province}</td>
-               <td>{this.props.dataSelect.latest.confirmed}</td>
-               <td>{this.props.dataSelect.latest.deaths}</td>
-               <td>{this.props.dataSelect.latest.recovered}</td>
-               <td>{this.props.dataSelect.last_updated}</td>
+               <td><NumberFormat value={this.props.dataSelect.latest.confirmed} thousandSeparator={true} displayType={'text'}/></td>
+               <td><NumberFormat value={this.props.dataSelect.latest.deaths} thousandSeparator={true} displayType={'text'}/></td>
+               <td><NumberFormat value={this.props.dataSelect.latest.recovered} thousandSeparator={true} displayType={'text'}/></td>
+               <td><NumberFormat value={this.props.dataSelect.last_updated} format="####/##/##" displayType={'text'} /></td>
             </tr>
          )
       }
