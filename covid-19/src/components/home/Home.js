@@ -55,15 +55,15 @@ export default class Home extends Component {
         })
     }
     isChangeToGetText = async (event) => {
-    let dataSearch = [];
-    this.state.dataSearch.forEach((item)=>{
-        if(item.country.indexOf(event.target.value) !== -1){
-            dataSearch.push(item);
-        }
-    });
-    this.setState({
-        data: dataSearch
-    })
+        let dataSearch = [];
+        this.state.dataSearch.forEach((item)=>{
+            if(item.country.toLowerCase().indexOf(event.target.value) !== -1){
+                dataSearch.push(item);
+            }
+        });
+        this.setState({
+            data: dataSearch
+        })
     }
     render() {
         return (
