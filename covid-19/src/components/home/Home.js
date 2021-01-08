@@ -49,14 +49,20 @@ export default class Home extends Component {
         }
     }
     isChangeToGetId = async (event) => {
-        const res = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations/'+event.target.value);
-        this.setState({
-            dataSelect: res.data.location
-        })
+        if(event.target.value !== "null"){
+            const res = await axios.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations/'+event.target.value);
+            this.setState({
+                dataSelect: res.data.location
+            })
+        }else{
+            this.setState({
+                dataSelect: ''
+            })
+        }
     }
     isChangeToGetText = async (event) => {
         let dataSearch = [];
-        this.state.dataSearch.forEach((item)=>{
+        await this.state.dataSearch.forEach((item)=>{
             if(item.country.toLowerCase().indexOf(event.target.value) !== -1){
                 dataSearch.push(item);
             }
@@ -70,7 +76,7 @@ export default class Home extends Component {
             <>
                 <div>
                     <select className="form-control" name="id_country" onChange={(event) => this.isChangeToGetId(event)}>
-                        <option>Chọn quốc gia</option>
+                        <option value="null">Chọn quốc gia</option>
                         {this.pushDataToSelect()}
                     </select>
                     <Item_Country dataSelect={this.state.dataSelect} />
